@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}Последние обновления ваших подписок{% endblock %}
+{% block content %}
+    {% include 'posts/includes/switcher.html' %}
+        <h1> Последние обновления авторов, на которых вы подписаны </h1>
+        {% if not page_obj %}
+            <p> Вы пока не подписаны ни на одного автора. <br> Чтобы подписаться на автора, перейдите на его страницу и нажмите кнопку "подписаться" в верхней части страницы. </p>
+        {% endif%}
+        {% for post in page_obj %}
+        <style>p {text-indent: 30px;}</style>
+        <div class ="container py-3">
+          <article>
+            <ul>
+              <li>
+                Автор:
+                <a href="{% url 'posts:profile' post.author.username %}">{{ post.author.username }}</a>
+              </li>
+              {% if post.group %} 
+                <li>
+                  Группа: 
+                  <a href="{% url 'posts:group_list' post.group.slug %}">
+                    {{ post.group.title }}
+                  </a> 
+                </li>
+              {% endif %}                     
+              <li>
+                Комментариев: {{ post.comments.count }}
+              </li>
+              <li>
+                Дата публикации: {{ post.pub_date|date:"d E Y" }}
+              </li>
+            </ul>
+          </article>
+          <article style="text-align: center;">
+            {% if post.image %}
+              <a href="{% url 'posts:post_detail' post.id %}" >
+                {% thumbnail post.image "1024x1024" upscale=True  as im %}
+                  {% if post.image|is_portrait %}
+                    <img src="{{ im.url }}" width="40%" >
+                  {% else %}
+                    <img src="{{ im.url }}" width="80%">
+                  {% endif %}
+                {% endthumbnail %}
+              </a>
+            {% endif %}
+            <p class ="pt-3 px-3" align="justify">
+              {{ post.text }}
+            </p>
+            <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
+            <br>
+            {% if not forloop.last %}<hr>{% endif %}
+          </article>
+        </div>
+        {% endfor %}
+    {% include 'posts/includes/paginator.html' %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Упссс((( Ошибка!{% endblock %}
+{% block content %}
+<div align="center">
+  <h1>Упссс((( Ошибка!
+  </h1>
+  <img src="{% static 'img/404.jpg' %}" height="400px" alt="Картинка: девушка пожимает плечами" >
+  <p>Запрошенной страницы не существует</p>
+  <a href="{% url 'posts:index' %}"> вернитесь на главную</a>
+</div>
+{% endblock %}
