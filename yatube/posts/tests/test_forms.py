@@ -175,15 +175,22 @@ class PostFormTests(TestCase):
             form_data.get('group')
         )
 
-    def test_edit_post_with_group(self):
-        """Добавление нового коментария происходит"""
+    def test_create_comment(self):
+        """Валидная форма создает новый коментарий"""
         form_data = {
-            'text': 'Test text 7',
-            'author': self.author,
-            'group': self.group.id
+            'text': 'Text comment',
         }
-        self.edit_helper(form_data)
-        self.assertEqual(
-            get_object_or_404(Post, id=self.post.id).group.id,
-            form_data.get('group')
+        comment_count = Comment.object.count()
+        respone = self.authorized_client.post(
+            reverse('posts:add_comment', kwarg={
+                'post_id': self.post.id
+            })
+            data=form_data
+            follow=true
         )
+        last_comment = Comment.object.latest('created')
+        self.assertRedirect(respone, reverse_'posts:post_detail', kwarg={
+            'post_id': self.post.id
+        }))
+        self.assertEqual(Comment.object.count(), comment_count + 1)
+        self.assertEqual(last_comment.text, form_data['text'])
