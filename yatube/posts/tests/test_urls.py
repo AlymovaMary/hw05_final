@@ -53,7 +53,7 @@ class TaskURLTests(TestCase):
             f'/posts/{self.post.id}/': HTTPStatus.OK,
             f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
             '/create/': HTTPStatus.FOUND,
-            'erros_page': HTTPStatus.NOT_FOUND,
+            '/erros_page/': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.FOUND,
             f'/profile/{self.user.username}/follow/': HTTPStatus.FOUND,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.FOUND
@@ -87,10 +87,10 @@ class TaskURLTests(TestCase):
             f'/posts/{self.post.id}/': HTTPStatus.OK,
             f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
             '/create/': HTTPStatus.OK,
-            '/erros_page/': HTTPStatus.NOT_FOUND,
+            '/erros-page/': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.OK,
             f'/profile/{self.user.username}/follow/': HTTPStatus.OK,
-            f'profile/{self.user.username}/unfollow/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
         }
         for url, code in status_code.items():
             with self.subTest(url=url):
