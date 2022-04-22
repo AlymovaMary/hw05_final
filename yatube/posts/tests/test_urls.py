@@ -46,7 +46,6 @@ class TaskURLTests(TestCase):
 
     def test_guest_correct_url_code(self):
         """URL-адрес гостю отдает нужный код."""
-        # Шаблоны по адресам
         status_code = {
             '/': HTTPStatus.OK,
             f'/group/{self.group.slug}/': HTTPStatus.OK,
@@ -56,7 +55,8 @@ class TaskURLTests(TestCase):
             '/create/': HTTPStatus.FOUND,
             'erros_page': HTTPStatus.NOT_FOUND,
             f'/follow/': HTTPStatus.FOUND,
-            f'/profile/{self.user.username}/unfollow/': HTTPStatus.FOUND
+            f'/profile/{self.user.username}/unfollow/': HTTPStatus.FOUND,
+            f'profile/{self.user.username}/unfollow/': HTTPStatus.FOUND
         }
         for url, code in status_code.items():
             with self.subTest(url=url):
@@ -79,6 +79,20 @@ class TaskURLTests(TestCase):
         self.assertTemplateUsed(response, 'posts/create_post.html')
 
     def test_authorized_correct_url_code(self):
-        """Доступность страниц авторизованым"""
-        response = self.authorized_client.get('/create/')
-        self.assertEqual(response.status_code, HTTPStatus.OK)
+        """Доступность страниц авторизованым пользователям"""
+        status_code = {
+            '/': HTTPStatus.OK,
+            f'/group/{self.group.slug}/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/': HTTPStatus.OK,
+            f'/posts/{self.post.id}/': HTTPStatus.OK,
+            f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
+            '/create/': HTTPStatus.OK,
+            'erros_page': HTTPStatus.NOT_FOUND,
+            f'/follow/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
+            f'profile/{self.user.username}/unfollow/': HTTPStatus.OK,
+        }
+        for url, code in status_code.items():
+            with self.subTest(url=url):
+                response = self.authorized_client.get(url)
+                self.assertEqual(response.status_code, code)
