@@ -185,7 +185,7 @@ class PostFormTests(TestCase):
             reverse('posts:add_comment', kwarg={
                 'post_id': self.post.id
             }),
-            data=form_data
+            data=form_data,
             follow=true
         )
         last_comment = Comment.object.latest('created')
