@@ -182,7 +182,7 @@ class PostFormTests(TestCase):
         }
         comment_count = Comment.objects.count()
         response = self.authorized_client.post(
-            reverse('posts:add_comment', kwarg={'post_id': self.post.id}),
+            reverse('posts:add_comment', kwargs={'post_id': self.post.id}),
             data=form_data,
             follow=True
         )

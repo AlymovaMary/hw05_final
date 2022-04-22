@@ -55,7 +55,7 @@ class TaskURLTests(TestCase):
             '/create/': HTTPStatus.FOUND,
             'erros_page': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.FOUND,
-            f'/profile/{self.user.username}/unfollow/': HTTPStatus.FOUND,
+            f'/profile/{self.user.username}/follow/': HTTPStatus.FOUND,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.FOUND
         }
         for url, code in status_code.items():
@@ -89,7 +89,7 @@ class TaskURLTests(TestCase):
             '/create/': HTTPStatus.OK,
             '/erros_page/': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.OK,
-            f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/follow/': HTTPStatus.OK,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.OK,
         }
         for url, code in status_code.items():
