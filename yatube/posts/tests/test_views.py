@@ -5,7 +5,6 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django import forms
 
-
 from posts.models import Post, Group, Comment, Follow
 
 
@@ -307,8 +306,8 @@ class FollowViewsTest(TestCase):
         ).exists()
         self.assertFalse(after_follower)
 
-    def test_follow_index(self):
-        """При создании автором новой записи, она появляется у подписчика."""
+    def test_non_follow_index(self):
+        """При создании автором новой записи, она не появляется у не подписчика."""
         Follow.objects.create(user=self.user, author=self.user_author)
         self.new_post = Post.objects.create(
             text='post fo followers',
@@ -319,12 +318,20 @@ class FollowViewsTest(TestCase):
         )
         self.authorized_non_follower = Client()
         self.authorized_non_follower.force_login(self.user_non_follower)
-        response_follower = self.authorized_client.get(reverse(
-            'posts:follow_index'))
-        self.assertTrue(self.new_post in response_follower.context['page_obj'])
         response_non_follower = self.authorized_non_follower.get(reverse(
             'posts:follow_index'
         ))
         self.assertFalse(self.new_post in response_non_follower.context[
             'page_obj']
         )
+
+    def test_follow_index(self):
+        """При создании автором новой записи, она появляется у подписчика."""
+        Follow.objects.create(user=self.user, author=self.user_author)
+        self.new_post = Post.objects.create(
+            text='post fo followers',
+            author=self.user_author
+        )
+        response_follower = self.authorized_client.get(reverse(
+            'posts:follow_index'))
+        self.assertTrue(self.new_post in response_follower.context['page_obj'])
