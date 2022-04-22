@@ -311,7 +311,8 @@ class FollowViewsTest(TestCase):
         self.assertFalse(after_follower)
 
     def test_non_follow_index(self):
-        """При создании автором новой записи, она не появляется у не подписчика."""
+        """При создании автором новой записи,"""
+        """она не появляется у не подписчика."""
         Follow.objects.create(user=self.user, author=self.user_author)
         self.new_post = Post.objects.create(
             text='post fo followers',
