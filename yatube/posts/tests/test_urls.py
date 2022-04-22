@@ -87,7 +87,7 @@ class TaskURLTests(TestCase):
             f'/posts/{self.post.id}/': HTTPStatus.OK,
             f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
             '/create/': HTTPStatus.OK,
-            'erros_page': HTTPStatus.NOT_FOUND,
+            '/erros_page/': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.OK,
             f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.OK,
