@@ -90,7 +90,7 @@ class TaskURLTests(TestCase):
             '/erros-page/': HTTPStatus.NOT_FOUND,
             '/follow/': HTTPStatus.OK,
             f'/profile/{self.user.username}/follow/': HTTPStatus.FOUND,
-            f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
+            f'/profile/{self.user.username}/unfollow/': HTTPStatus.FOUND,
         }
         for url, code in status_code.items():
             with self.subTest(url=url):
