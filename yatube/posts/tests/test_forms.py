@@ -180,7 +180,7 @@ class PostFormTests(TestCase):
         form_data = {
             'text': 'Text comment',
         }
-        comment_count = Comment.object.count()
+        comment_count = Comment.objects.count()
         response = self.authorized_client.post(
             reverse('posts:add_comment', kwarg={
                 'post_id': self.post.id
@@ -188,7 +188,7 @@ class PostFormTests(TestCase):
             data=form_data,
             follow=True
         )
-        last_comment = Comment.object.latest('created')
+        last_comment = Comment.objects.latest('created')
         self.assertRedirect(response, reverse('posts:post_detail', kwarg={
             'post_id': self.post.id
         }))
