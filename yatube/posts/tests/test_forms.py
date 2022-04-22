@@ -181,7 +181,7 @@ class PostFormTests(TestCase):
             'text': 'Text comment',
         }
         comment_count = Comment.object.count()
-        respone = self.authorized_client.post(
+        response = self.authorized_client.post(
             reverse('posts:add_comment', kwarg={
                 'post_id': self.post.id
             }),
