@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from http import HTTPStatus
 
-from posts.models import Post, Group, Comment, Follow
+from posts.models import Post, Group
 
 User = get_user_model()
 
@@ -54,7 +54,7 @@ class TaskURLTests(TestCase):
             f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
             '/create/': HTTPStatus.FOUND,
             'erros_page': HTTPStatus.NOT_FOUND,
-            f'/follow/': HTTPStatus.FOUND,
+            '/follow/': HTTPStatus.FOUND,
             f'/profile/{self.user.username}/unfollow/': HTTPStatus.FOUND,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.FOUND
         }
@@ -88,7 +88,7 @@ class TaskURLTests(TestCase):
             f'/posts/{self.post.id}/edit/': HTTPStatus.FOUND,
             '/create/': HTTPStatus.OK,
             'erros_page': HTTPStatus.NOT_FOUND,
-            f'/follow/': HTTPStatus.OK,
+            '/follow/': HTTPStatus.OK,
             f'/profile/{self.user.username}/unfollow/': HTTPStatus.OK,
             f'profile/{self.user.username}/unfollow/': HTTPStatus.OK,
         }

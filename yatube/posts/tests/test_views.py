@@ -54,7 +54,8 @@ class PostURLTests(TestCase):
         self.author_client.force_login(PostURLTests.user)
 
     def test_correct_template(self):
-        """Views index, group_list, profile, detail, create_post используют соответствующие шаблоны."""
+        """Views index, group_list, profile, detail,"""
+        """create_post используют соответствующие шаблоны."""
         templates_pages_names = {
             'posts/index.html': reverse('posts:index'),
             'posts/group_list.html': reverse(
@@ -81,7 +82,8 @@ class PostURLTests(TestCase):
         self.assertTemplateUsed(response, 'posts/create_post.html')
 
     def test_index_group_list_profile_page_show_correct_context(self):
-        """Шаблоны index, group_list, profile сформированы с правильным контекстом."""
+        """Шаблоны index, group_list, profile"""
+        """сформированы с правильным контекстом."""
         templates_context = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
@@ -240,7 +242,8 @@ class PaginatorViewsTest(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_first_page_contains_ten_records(self):
-        """Проверка работы паджинатора, на первой странице отображается 10 постов"""
+        """Проверка работы паджинатора,"""
+        """на первой странице отображается 10 постов"""
         urls_names = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
@@ -250,7 +253,8 @@ class PaginatorViewsTest(TestCase):
             self.assertEqual(len(response.context['page_obj']), settings.PAGE)
 
     def test_first_page_contains_three_records(self):
-        """Проверка работы паджинатора, на второй странице отображается остаток постов - 3 поста"""
+        """Проверка работы паджинатора,"""
+        """на второй странице отображается остаток постов - 3 поста"""
         urls_names = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
