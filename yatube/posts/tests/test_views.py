@@ -55,7 +55,7 @@ class PostURLTests(TestCase):
         self.author_client.force_login(PostURLTests.user)
 
     def test_correct_template(self):
-        """View использует соответствующий шаблон."""
+        """Views index, group_list, profile, detail, create_post используют соответствующие шаблоны."""
         templates_pages_names = {
             'posts/index.html': reverse('posts:index'),
             'posts/group_list.html': reverse(
@@ -75,13 +75,14 @@ class PostURLTests(TestCase):
                 self.assertTemplateUsed(response, template)
 
     def test_post_edit_correct_template(self):
+        """Views post_edit использует соответствующий шаблон."""
         response = self.author_client.get(reverse(
             'posts:post_edit',
             kwargs={'post_id': self.post.pk}))
         self.assertTemplateUsed(response, 'posts/create_post.html')
 
     def test_index_group_list_profile_page_show_correct_context(self):
-        """Шаблоны сформированы с правильным контекстом."""
+        """Шаблоны index, group_list, profile сформированы с правильным контекстом."""
         templates_context = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
@@ -105,7 +106,7 @@ class PostURLTests(TestCase):
                 )
 
     def test_detail_context(self):
-        """Шаблон сформированы с правильным контекстом для post_detail."""
+        """Шаблон detail сформирован с правильным контекстом"""
         response = self.authorized_client.get(reverse(
             'posts:post_detail',
             args=[self.post.pk]),
@@ -122,7 +123,7 @@ class PostURLTests(TestCase):
         )
 
     def test_post_edit_context(self):
-        """Шаблон home сформирован с правильным контекстом."""
+        """Шаблон post_edit сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse(
             'posts:post_edit',
             kwargs={'post_id': self.post.pk})
@@ -137,7 +138,7 @@ class PostURLTests(TestCase):
                 self.assertIsInstance(form_field, expected)
 
     def test_post_create_context(self):
-        """Шаблон home сформирован с правильным контекстом."""
+        """Шаблон post_create сформирован с правильным контекстом."""
         response = self.authorized_client.get(reverse('posts:post_create'))
         form_fields = {
             'text': forms.fields.CharField,
@@ -174,8 +175,8 @@ class PostURLTests(TestCase):
         )
 
     def test_post_edit_random_user(self):
-        """ проверка страницы редактирования поста  авторизованным
-        пользователем (не автором)"""
+        """Проверка страницы редактирования поста  авторизованным
+        пользователем, но не автором"""
         response_random = self.authorized_client.get(
             reverse('posts:post_edit', kwargs={'post_id': self.post.pk}))
         create_context = {
@@ -240,6 +241,7 @@ class PaginatorViewsTest(TestCase):
         self.authorized_client.force_login(self.user)
 
     def test_first_page_contains_ten_records(self):
+        """Проверка работы паджинатора, на первой странице отображается 10 постов"""
         urls_names = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
@@ -249,6 +251,7 @@ class PaginatorViewsTest(TestCase):
             self.assertEqual(len(response.context['page_obj']), settings.PAGE)
 
     def test_first_page_contains_three_records(self):
+        """Проверка работы паджинатора, на второй странице отображается остаток постов - 3 поста"""
         urls_names = {
             reverse('posts:index'),
             reverse('posts:group_list', kwargs={'slug': self.group.slug}),
