@@ -11,7 +11,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.shortcuts import get_object_or_404
 from django.test import Client, TestCase, override_settings
 
-from posts.models import Group, Post
+from posts.models import Group, Post, Comment
 from posts.forms import PostForm
 
 User = get_user_model()
