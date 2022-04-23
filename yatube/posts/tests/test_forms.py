@@ -192,3 +192,19 @@ class PostFormTests(TestCase):
         }))
         self.assertEqual(Comment.objects.count(), comment_count + 1)
         self.assertEqual(last_comment.text, form_data['text'])
+
+    def test_create_comment_quest(self):
+        """Гость не может создать коментарий"""
+        form_data = {
+            'text': 'Text comment',
+        }
+        comment_count = Comment.objects.count()
+        response = self.quest_client.post(
+            reverse('posts:add_comment', kwargs={'post_id': self.post.id}),
+            data=form_data,
+            follow=True
+        )
+        self.assertRedirects(response, reverse('posts:post_detail', kwargs={
+            'post_id': self.post.id
+        }))
+        self.assertEqual(Comment.objects.count(), comment_count)
