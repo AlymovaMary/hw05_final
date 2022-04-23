@@ -199,7 +199,7 @@ class PostFormTests(TestCase):
             'text': 'Text comment',
         }
         comment_count = Comment.objects.count()
-        response = self.quest_client.post(
+        response = self.guest_client.post(
             reverse('posts:add_comment', kwargs={'post_id': self.post.id}),
             data=form_data,
             follow=True
