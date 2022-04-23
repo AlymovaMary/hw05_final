@@ -326,7 +326,7 @@ class FollowViewsTest(TestCase):
         response_non_follower = self.authorized_non_follower.get(reverse(
             'posts:follow_index'
         ))
-        self.assertFalse(self.new_post in response_non_follower.context[
+        self.assertNotIn(self.new_post, response_non_follower.context[
             'page_obj']
         )
 
@@ -339,4 +339,4 @@ class FollowViewsTest(TestCase):
         )
         response_follower = self.authorized_client.get(reverse(
             'posts:follow_index'))
-        self.assertTrue(self.new_post in response_follower.context['page_obj'])
+        self.assertIn(self.new_post, response_follower.context['page_obj'])
