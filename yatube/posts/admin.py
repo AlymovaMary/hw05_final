@@ -22,6 +22,7 @@ class GroupAdmin(admin.ModelAdmin):
         'title',
     )
 
+
 class CommentAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
