@@ -22,8 +22,16 @@ class GroupAdmin(admin.ModelAdmin):
         'title',
     )
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'text',
+        'author',
+    )
+    search_fields = ('text',)
+
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Follow)
